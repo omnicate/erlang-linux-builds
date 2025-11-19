@@ -64,7 +64,7 @@ jobs:
           gh release create OTP-${{ steps.version.outputs.otp_version }} \
             /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}.tar.gz \
             --title "OTP ${{ steps.version.outputs.otp_version }}" \
-            --notes "OTP ${{ steps.version.outputs.otp_version }} built for Linux ${{ matrix.arch }}" \
+            --notes "Erlang/OTP ${{ steps.version.outputs.otp_version }} built for Linux" \
             --repo ${{ github.repository }} || \
           gh release upload OTP-${{ steps.version.outputs.otp_version }} \
             /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}.tar.gz \
