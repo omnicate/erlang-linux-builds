@@ -1,8 +1,8 @@
-# Unofficial Erlang Archives
+# Unofficial Erlang Binaries
 
 ## What is this?
 
-`erlang-builds` provides a dependency-free distribution of [Erlang/OTP](https://github.com/erlang/otp) for Linux. This makes it extremely easy to install and distribute, especially when building releases. Head to [Releases](https://github.com/gleam-community/erlang-builds/releases) to download the latest (or older) versions!
+`gleam-community` provides a dependency-free distribution of [Erlang/OTP](https://github.com/erlang/otp) for Linux. This makes it extremely easy to install and distribute, especially when building releases. Head to [Releases](https://github.com/gleam-community/erlang-linux-builds/releases) to download the latest (or older) versions!
 
 ## Variants
 
