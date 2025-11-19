@@ -26,6 +26,24 @@ Documentation and examples are removed. Refer to the [online documentation](http
 
 Additionally, the Tarball includes a prebuilt version of [rebar3](https://github.com/erlang/rebar3). The installed packages on the build system are written into a file called `versions.txt` that is included in the archive.
 
+## Usage
+
+Download the right variant in the latest version from the [Releases](https://github.com/gleam-community/erlang-linux-builds/releases) page. The tarball does not include a top-level directory; this has been done to be compatible with Erlang/OTPs official releases. Once extracted, you will find all the files and directories included in the Erlang installation directory, typically inside `/usr/local/lib/erlang`. You can copy the files there, but you can also directly run the `./bin/erl` program from anywhere to enter an Erlang shell.
+
+```bash
+# Download the latest version
+wget $RELEASE_URL
+
+# Create a target directory
+mkdir erlang
+
+# Extract downloaded archive into tht directory
+tar -xf erlang-*.tar.gz -C erlang/
+
+# Run an Erlang shell!
+./erlang/bin/erl
+```
+
 ## What about NIFs?
 
 Unfortunately, there is no supported way to load dynamic libraries from a static binary on Linux. The dynamically linked variants for `glibc` and `musl` can be used instead (see above for more information).
