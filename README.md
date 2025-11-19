@@ -2,35 +2,38 @@
 
 ## What is this?
 
-`erlang-builds` provides a dependency-free distribution of [Erlang/OTP](https://github.com/erlang/otp) for Linux. This makes it extremely easy to install and distribute, especially when building releases.
+`erlang-builds` provides a dependency-free distribution of [Erlang/OTP](https://github.com/erlang/otp) for Linux. This makes it extremely easy to install and distribute, especially when building releases. Head to [Releases](https://github.com/gleam-community/erlang-builds/releases) to download the latest (or older) versions!
 
 ## Variants
 
-We provide 3 variants for each OTP release:
+We provide 3 variants for each OTP release, depending on which flavour of the C standard librar `libc` your distribution uses:
 
-- *-glibc*: glibc is the most commonly used libc flavour. Glibc is the basis for almost all popular distributions like Debian, Ubuntu, Arch Linux, Fedora, RHEL, OpenSUSE, and many more.
+- **-glibc**: glibc is the most commonly used libc flavour. Glibc is the basis for almost all popular distributions like Debian, Ubuntu, Arch Linux, Fedora, RHEL, OpenSUSE, and many more.
 
-- *-musl*: musl is a lightweight alternative to glibc used in distributations like Alpine Linux.
+- **-musl**: musl is a lightweight alternative  to glibc used in distributations like Alpine or Void Linux.
 
-- *static* (no suffix): The statically linked variant has zero external dependencies and works regardless of distributation or libc flavour. Keep in mind that an Erlang distribution includes some shell scripts. These are used by default to setup an environment but are otherwise optional. It can run even on NixOS or minimal docker containers. Unfortunately, statically linking makes using NIFs and driver plugins impossible; see below for more information.
+- **static** (no suffix): The statically linked variant has zero external dependencies and works regardless of distributation or libc flavour. It can run even in environments like NixOS or `from scratch` containers. Unfortunately, statically linking makes using NIFs and driver plugins impossible; see below for more information.
 
 ## What is included?
 
-All variants statically link with ncurses, OpenSSL and zlib. This makes almost all of OTP available, except for the following applications:
+All variants statically link with ncurses, OpenSSL and zlib, which means they work out-of-the-box on any Linux system. They make almost all of OTP available, except for the following applications:
 
 - `jinterface`
 - `odbc`
-- `wx` and dependents: `debugger` and `observer`. Note that `et` and `reltool` also come with modules that require `wx`; these will not work.
+- `wx` and dependents: `debugger` and `observer`. Note that `et` and `reltool` also include modules that require `wx`; these will not work.
 
-Documentation and Examples are removed. Refer to the [online documentation](https://www.erlang.org/doc/readme.html) instead.
+Documentation and examples are removed. Refer to the [online documentation](https://www.erlang.org/doc/readme.html) instead.
 
-Additionally, the Tarball also includes a prebuilt version of [rebar3](https://github.com/erlang/rebar3). The installed packages on the build system are written into a file called `versions.txt` that is included in the archive.
+Additionally, the Tarball includes a prebuilt version of [rebar3](https://github.com/erlang/rebar3). The installed packages on the build system are written into a file called `versions.txt` that is included in the archive.
 
 ## What about NIFs?
 
 Unfortunately, there is no supported way to load dynamic libraries from a static binary on Linux. The dynamically linked variants for `glibc` and `musl` can be used instead (see above for more information).
 
 Once you start using NIFs it's maybe also a good time to start considering using a "full" Erlang installation, or finding an alternative by using pure Erlang libraries, ports, or C nodes.
+
+While I have some ideas on how to possibly support odbc in the future, wxWidgets will most likely never be supported. If you're looking for an an alternative to observer, [spectator](https://hexdocs.pm/spectator/index.html) or [Phoenix LiveDashboard](https://hexdocs.pm/phoenix_live_dashboard/Phoenix.LiveDashboard.html) can be used instead. 
+
 
 ## Windows and MacOS
 
