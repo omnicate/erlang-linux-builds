@@ -36,7 +36,7 @@ jobs:
         id: version
         run: |
 
-          if [ "${{ github.event_name }}" == "push" ]; then
+          if [ "${{ github.event_name }}" = "push" ]; then
             echo "otp_version=${GITHUB_REF#refs/tags/OTP-}" >> $GITHUB_OUTPUT
           else
             echo "otp_version=${{ inputs.otp_version }}" >> $GITHUB_OUTPUT
@@ -94,13 +94,7 @@ jobs:
       - name: Extract OTP version
         id: version
         run: |
-          echo "Event: ${{ github.event_name }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "Ref name: ${{ github.ref_name }}"
-          echo "GITHUB_REF env: ${GITHUB_REF}"
-          env | grep GITHUB | sort
-
-          if [ "${{ github.event_name }}" == "push" ]; then
+          if [ "${{ github.event_name }}" = "push" ]; then
             echo "otp_version=${GITHUB_REF#refs/tags/OTP-}" >> $GITHUB_OUTPUT
           else
             echo "otp_version=${{ inputs.otp_version }}" >> $GITHUB_OUTPUT
@@ -159,7 +153,7 @@ jobs:
         id: version
         run: |
 
-          if [ "${{ github.event_name }}" == "push" ]; then
+          if [ "${{ github.event_name }}" = "push" ]; then
             echo "otp_version=${GITHUB_REF#refs/tags/OTP-}" >> $GITHUB_OUTPUT
           else
             echo "otp_version=${{ inputs.otp_version }}" >> $GITHUB_OUTPUT
