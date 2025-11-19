@@ -51,8 +51,8 @@ jobs:
 
       - name: Create tar.gz archive
         run: |
-          cd /usr/local/lib/
-          tar --strip-components=1 -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}.tar.gz erlang
+          cd /usr/local/lib/erlang
+          tar -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}.tar.gz *
 
       - name: Create GitHub Release
         env:
@@ -107,8 +107,8 @@ jobs:
 
       - name: Create tar.gz archive
         run: |
-          cd /usr/local/lib/
-          tar --strip-components=1 -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-musl.tar.gz erlang
+          cd /usr/local/lib/erlang/
+          tar -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-musl.tar.gz *
 
       - name: Create GitHub Release
         env:
@@ -164,8 +164,8 @@ jobs:
 
       - name: Create tar.gz archive
         run: |
-          cd /usr/local/lib/
-          tar --strip-components=1 -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-glibc.tar.gz erlang
+          cd /usr/local/lib/erlang
+          tar -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-glibc.tar.gz *
 
       - name: Create GitHub Release
         env:
