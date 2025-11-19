@@ -177,7 +177,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          apk add --no-cache github-cli
+          apt install -y --no-install-recommends gh
           gh release create OTP-${{ steps.version.outputs.otp_version }} \
             /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-glibc.tar.gz \
             --title "OTP ${{ steps.version.outputs.otp_version }}" \
