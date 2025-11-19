@@ -54,12 +54,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           apk add --no-cache github-cli
-          gh release create otp-${{ matrix.otp_version }} \
+          gh release create OTP-${{ matrix.otp_version }} \
             /tmp/erlang-${{ matrix.otp_version }}-${{ matrix.arch }}.tar.gz \
             --title "OTP ${{ matrix.otp_version }}" \
             --notes "OTP ${{ matrix.otp_version }} built for Linux ${{ matrix.arch }}" \
             --repo ${{ github.repository }} || \
-          gh release upload otp-${{ matrix.otp_version }} \
+          gh release upload OTP-${{ matrix.otp_version }} \
             /tmp/erlang-${{ matrix.otp_version }}-${{ matrix.arch }}.tar.gz \
             --repo ${{ github.repository }} \
             --clobber
