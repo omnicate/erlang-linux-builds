@@ -12,7 +12,7 @@ on:
         required: true
 
 jobs:
-  build:
+  build-static:
     runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     container:
       image: alpine:3.22
@@ -68,5 +68,123 @@ jobs:
             --repo ${{ github.repository }} || \
           gh release upload OTP-${{ steps.version.outputs.otp_version }} \
             /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}.tar.gz \
+            --repo ${{ github.repository }} \
+            --clobber
+
+  build-musl:
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    container:
+      image: alpine:3.22
+
+    strategy:
+      fail-fast: false
+      matrix:
+        rebar3_version:
+          - "3.25.1"
+        arch:
+          - "x64"
+          - "arm64"
+
+    steps:
+      - name: Checkout repository
+        uses: taiki-e/checkout-action@v1
+        with:
+          persist-credentials: true
+
+      - name: Extract OTP version
+        id: version
+        run: |
+
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "otp_version=${GITHUB_REF#refs/tags/OTP-}" >> $GITHUB_OUTPUT
+          else
+            echo "otp_version=${{ inputs.otp_version }}" >> $GITHUB_OUTPUT
+          fi
+
+          cat $GITHUB_OUTPUT
+
+      - name: Build
+        run: |
+          chmod +x ./build-musl.sh
+          export OTP_VERSION=${{ steps.version.outputs.otp_version }}
+          export REBAR3_VERSION=${{ matrix.rebar3_version }}
+          ./build-musl.sh
+
+      - name: Create tar.gz archive
+        run: |
+          cd /usr/local/lib/
+          tar --strip-components=1 -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}.tar.gz erlang
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          apk add --no-cache github-cli
+          gh release create OTP-${{ steps.version.outputs.otp_version }} \
+            /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-musl.tar.gz \
+            --title "OTP ${{ steps.version.outputs.otp_version }}" \
+            --notes "Erlang/OTP ${{ steps.version.outputs.otp_version }} built for Linux" \
+            --repo ${{ github.repository }} || \
+          gh release upload OTP-${{ steps.version.outputs.otp_version }} \
+            /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-musl.tar.gz \
+            --repo ${{ github.repository }} \
+            --clobber
+
+  build-glibc:
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    container:
+      image: debian:bookworm-slim
+
+    strategy:
+      fail-fast: false
+      matrix:
+        rebar3_version:
+          - "3.25.1"
+        arch:
+          - "x64"
+          - "arm64"
+
+    steps:
+      - name: Checkout repository
+        uses: taiki-e/checkout-action@v1
+        with:
+          persist-credentials: true
+
+      - name: Extract OTP version
+        id: version
+        run: |
+
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "otp_version=${GITHUB_REF#refs/tags/OTP-}" >> $GITHUB_OUTPUT
+          else
+            echo "otp_version=${{ inputs.otp_version }}" >> $GITHUB_OUTPUT
+          fi
+
+          cat $GITHUB_OUTPUT
+
+      - name: Build
+        run: |
+          chmod +x ./build-glibc.sh
+          export OTP_VERSION=${{ steps.version.outputs.otp_version }}
+          export REBAR3_VERSION=${{ matrix.rebar3_version }}
+          ./build-glibc.sh
+
+      - name: Create tar.gz archive
+        run: |
+          cd /usr/local/lib/
+          tar --strip-components=1 -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}.tar.gz erlang
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          apk add --no-cache github-cli
+          gh release create OTP-${{ steps.version.outputs.otp_version }} \
+            /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-glibc.tar.gz \
+            --title "OTP ${{ steps.version.outputs.otp_version }}" \
+            --notes "Erlang/OTP ${{ steps.version.outputs.otp_version }} built for Linux" \
+            --repo ${{ github.repository }} || \
+          gh release upload OTP-${{ steps.version.outputs.otp_version }} \
+            /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-glibc.tar.gz \
             --repo ${{ github.repository }} \
             --clobber
