@@ -29,8 +29,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: taiki-e/checkout-action@v1
-        with:
-          persist-credentials: true
 
       - name: Extract OTP version
         id: version
@@ -88,8 +86,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: taiki-e/checkout-action@v1
-        with:
-          persist-credentials: true
 
       - name: Extract OTP version
         id: version
@@ -146,8 +142,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: taiki-e/checkout-action@v1
-        with:
-          persist-credentials: true
 
       - name: Extract OTP version
         id: version
