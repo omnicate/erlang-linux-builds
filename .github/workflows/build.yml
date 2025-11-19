@@ -94,6 +94,11 @@ jobs:
       - name: Extract OTP version
         id: version
         run: |
+          echo "Event: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Ref name: ${{ github.ref_name }}"
+          echo "GITHUB_REF env: ${GITHUB_REF}"
+          env | grep GITHUB | sort
 
           if [ "${{ github.event_name }}" == "push" ]; then
             echo "otp_version=${GITHUB_REF#refs/tags/OTP-}" >> $GITHUB_OUTPUT
@@ -113,7 +118,7 @@ jobs:
       - name: Create tar.gz archive
         run: |
           cd /usr/local/lib/
-          tar --strip-components=1 -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}.tar.gz erlang
+          tar --strip-components=1 -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-musl.tar.gz erlang
 
       - name: Create GitHub Release
         env:
@@ -172,7 +177,7 @@ jobs:
       - name: Create tar.gz archive
         run: |
           cd /usr/local/lib/
-          tar --strip-components=1 -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}.tar.gz erlang
+          tar --strip-components=1 -czf /tmp/erlang-${{ steps.version.outputs.otp_version }}-${{ matrix.arch }}-glibc.tar.gz erlang
 
       - name: Create GitHub Release
         env:
