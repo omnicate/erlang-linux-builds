@@ -11,7 +11,7 @@ apt install --no-install-recommends -y curl ca-certificates
 
 curl -fSL -o otp-src.tar.gz "$OTP_DOWNLOAD_URL"
 
-apt install --no-install-recommends -y perl clang make ncurses-dev libssl-dev pax-utils
+apt install --no-install-recommends -y perl clang make ncurses-dev libssl-dev pax-utils libsctp-dev
 
 mkdir -vp $ERL_TOP
 tar xzf otp-src.tar.gz -C $ERL_TOP --strip-components=1

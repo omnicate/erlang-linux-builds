@@ -22,6 +22,7 @@ apk add --no-cache --virtual .build-deps \
     ncurses-static \
     openssl-dev \
     openssl-libs-static \
+    lksctp-tools-dev \
     tar
 
 mkdir -vp $ERL_TOP
