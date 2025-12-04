@@ -26,6 +26,7 @@ rm otp-src.tar.gz
         LDFLAGS="-static-libgcc -static-libstdc++" \
         --build="$(dpkg-architecture --query DEB_HOST_GNU_TYPE)" \
         --enable-jit \
+        --enable-sctp \
         --with-termcap \
         --without-javac \
         --enable-builtin-zlib \

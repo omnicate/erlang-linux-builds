@@ -36,6 +36,7 @@ rm otp-src.tar.gz
         CFLAGS="-Os" \
         LDFLAGS="-static-libgcc -static-libstdc++" \
         --enable-jit \
+        --enable-sctp \
         --with-termcap \
         --without-javac \
         --enable-builtin-zlib \
