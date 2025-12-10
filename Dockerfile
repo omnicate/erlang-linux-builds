@@ -1,6 +1,6 @@
 FROM docker.io/library/alpine:3.22
 
-ENV OTP_VERSION="28.2" \
+ENV OTP_VERSION="28.3" \
     REBAR3_VERSION="3.25.0"
 
 LABEL org.opencontainers.image.version=$OTP_VERSION
